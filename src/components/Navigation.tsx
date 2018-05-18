@@ -11,6 +11,7 @@ class Navigation extends React.Component<object> {
         <Link location="https://www.google.com" title="Google" />
         <Link location="/login" title="Login" />
         <Link location="/blog" title="Blog" />
+        <Link location="/bible" title="Bible" />
       </div>
     );
   }
