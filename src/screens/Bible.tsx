@@ -1,13 +1,28 @@
 import * as React from "react";
 import Header from "../components/typography/header";
+import StyledDropdwon from "../components/basic/dropdown";
+import axios from "axios";
+import dbpkey from "../../auth";
 
-// const logo = require("./logo.svg");
+function test() {
+  // GET request for remote image
+  axios({
+    method: "get",
+    url: `http://dbt.io/library/book?key=${dbpkey}&dam_id=ENGNAS&v=2`
+  }).then(function(response: any) {
+    // tslint:disable-next-line:no-console
+    console.log("response = ", response);
+    // response.data.pipe(fs.createWriteStream("ada_lovelace.jpg"));
+  });
+}
 
 class Bible extends React.Component {
   render() {
     return (
       <div className="App">
+        {test()}
         <Header title="Bible Page" />
+        <StyledDropdwon option="Test" />
       </div>
     );
   }
