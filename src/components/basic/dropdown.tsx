@@ -1,8 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
+import dbpkey from "../../auth";
 
-export interface Props {
-  option: string;
+interface Props {
+  option?: string;
+  // booksOfBible?: any;
+}
+
+interface State {
+  booksOfBible: any;
 }
 
 // This is just an example of a styled component
@@ -10,23 +16,38 @@ const StyledDropdown = styled.select`
   font-size: 1.5em;
 `;
 
-function mapoptions(test: string[]) {
-  test.map(key => {
-    // tslint:disable-next-line:no-console
-    console.log(key);
-    return (
-      <option key={key} value={key.toLowerCase()}>
-        {key.toUpperCase()}
-      </option>
-    );
-  });
-}
+class Dropdown extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { booksOfBible: "" };
+  }
+  componentDidMount() {
+    let books: any = [];
+    fetch(`http://dbt.io/library/book?key=${dbpkey}&dam_id=ENGNAS&v=2`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        books = data.map((book: any) => {
+          return book;
+        });
+        this.setState({
+          booksOfBible: books
+        });
+      });
+  }
 
-class Dropdown extends React.Component<Props, object> {
   public render() {
+    let optionItems;
+    if (this.state.booksOfBible !== "") {
+      optionItems = this.state.booksOfBible.map((book: any) => (
+        <option key={book.book_name}>{book.book_name}</option>
+      ));
+    }
     const { option } = this.props;
     return (
-      <StyledDropdown>{mapoptions([option, "Test", "Tester"])}</StyledDropdown>
+      // TODO: Find a better way to create a dynamic dropdown.....
+      <StyledDropdown key={option}>{optionItems}</StyledDropdown>
     );
   }
 }
