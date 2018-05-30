@@ -2,6 +2,7 @@ import * as React from "react";
 import Header from "../components/typography/header";
 import StyledDropdown from "../components/basic/dropdown";
 
+
 class Bible extends React.Component {
   render() {
     return (
