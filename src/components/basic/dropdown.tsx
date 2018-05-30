@@ -66,7 +66,6 @@ class Dropdown extends React.Component<Props, State> {
           {optionItems}
         </StyledDropdown>
       </div>
-      <StyledDropdown key={option}>{optionItems}</StyledDropdown>
     );
   }
 }
