@@ -9,7 +9,10 @@ class Home extends React.Component {
         <h1>The Bible Dare</h1>
         <div>
           <button>Read The Bible</button>
-          <button>Read The Bible</button>
+          <button>How to contribute</button>
+        </div>
+        <div>
+          <p>You can also read the bible here.</p>
         </div>
       </div>
     );
