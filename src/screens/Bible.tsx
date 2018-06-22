@@ -8,6 +8,12 @@ class Bible extends React.Component {
       <div className="App">
         <Header title="Bible Page" />
         <StyledDropdown option={"test"} />
+        <select>
+          <option>Chapter</option>
+        </select>
+        <select>
+          <option>Verse</option>
+        </select>
       </div>
     );
   }

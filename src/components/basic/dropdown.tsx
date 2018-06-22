@@ -37,8 +37,8 @@ class Dropdown extends React.Component<Props, State> {
       });
   }
 
-  testament = () => {
-    console.log("test");
+  testament = (book: any) => {
+    console.log("book = ", book);
   };
 
   public render() {
@@ -51,21 +51,15 @@ class Dropdown extends React.Component<Props, State> {
     const { option } = this.props;
     return (
       // TODO: Find a better way to create a dynamic dropdown.....
-      <div className="bible">
-        <StyledDropdown onChange={this.testament} key="testament">
-          <option />
-          <option key="ot" value="ot">
-            Old Testament
-          </option>
-          <option key="nt" value="NT">
-            New Testament
-          </option>
-        </StyledDropdown>
-        <StyledDropdown key={option}>
-          <option />
-          {optionItems}
-        </StyledDropdown>
-      </div>
+      <StyledDropdown
+        key={option}
+        onChange={() => {
+          this.testament(this);
+        }}
+      >
+        <option />
+        {optionItems}
+      </StyledDropdown>
     );
   }
 }
