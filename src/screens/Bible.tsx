@@ -4,7 +4,9 @@ import StyledDropdown from "../components/basic/dropdown";
 import dbpkey from "../auth";
 
 interface State {
-  booksOfBible: any;
+  booksOfBible: string[];
+  chapters: string[];
+  verses: string[];
   loading: boolean;
 }
 
@@ -16,7 +18,9 @@ class Bible extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      booksOfBible: "",
+      booksOfBible: [""],
+      chapters: ["Pick a Book"],
+      verses: ["Pick a Book and Chapter"],
       loading: false
     };
   }
@@ -38,29 +42,34 @@ class Bible extends React.Component<Props, State> {
       });
   }
 
+  chapters = () => {
+    let chapters: any = [];
+    fetch(`http://dbt.io/library/book?key=${dbpkey}&dam_id=ENGNAS&v=2`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        chapters = data.map((book: any) => {
+          return book.book_name;
+        });
+        this.setState({
+          booksOfBible: chapters,
+          loading: true
+        });
+      });
+  };
+
   render() {
-    // let optionItems;
-    // if (this.state.booksOfBible !== "") {
-    //   optionItems = this.state.booksOfBible.map((book: any) => (
-    //     <option key={book.book_name}>{book.book_name}</option>
-    //   ));
-    // }
-    if (this.state.loading === false) {
-      return null;
-    } else {
-      return (
-        <div className="App">
-          <Header title="Bible Page" />
-          <StyledDropdown options={this.state.booksOfBible} />
-          <select>
-            <option>Chapter</option>
-          </select>
-          <select>
-            <option>Verse</option>
-          </select>
-        </div>
-      );
-    }
+    let { booksOfBible, chapters, verses, loading } = this.state;
+
+    return (
+      <div className="Bible">
+        <Header title="Bible Page" />
+        <StyledDropdown options={loading ? booksOfBible : [""]} />
+        <StyledDropdown options={chapters} />
+        <StyledDropdown options={verses} />
+      </div>
+    );
   }
 }
 

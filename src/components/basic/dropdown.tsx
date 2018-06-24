@@ -26,7 +26,9 @@ class Dropdown extends React.Component<Props> {
           this.testament(this);
         }}
       >
-        {options.map((book: any) => <option key={book}>{book}</option>)}
+        {options.map((option: string) => (
+          <option key={option}>{option}</option>
+        ))}
       </StyledDropdown>
     );
   }
