@@ -45,19 +45,22 @@ class Bible extends React.Component<Props, State> {
     //     <option key={book.book_name}>{book.book_name}</option>
     //   ));
     // }
-    return (
-      <div className="App">
-        <Header title="Bible Page" />
-
-        <StyledDropdown options={["test"]} />
-        <select>
-          <option>Chapter</option>
-        </select>
-        <select>
-          <option>Verse</option>
-        </select>
-      </div>
-    );
+    if (this.state.loading === false) {
+      return null;
+    } else {
+      return (
+        <div className="App">
+          <Header title="Bible Page" />
+          <StyledDropdown options={this.state.booksOfBible} />
+          <select>
+            <option>Chapter</option>
+          </select>
+          <select>
+            <option>Verse</option>
+          </select>
+        </div>
+      );
+    }
   }
 }
 
