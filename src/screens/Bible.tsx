@@ -42,21 +42,51 @@ class Bible extends React.Component<Props, State> {
       });
   }
 
-  chapters = () => {
+  chapters = (bookId: string) => {
+    bookId = "Gen";
     let chapters: any = [];
-    fetch(`http://dbt.io/library/book?key=${dbpkey}&dam_id=ENGNAS&v=2`)
+    fetch(
+      `http://dbt.io/library/chapter?key=c0c769e931f78307a6c1c65cc5bd1d8c&dam_id=ENGNAS&book_id=${bookId}&v=2`
+    )
       .then(response => {
         return response.json();
       })
       .then(data => {
+        console.log("chapters = ", data);
         chapters = data.map((book: any) => {
-          return book.book_name;
+          return book.chapter_name;
         });
         this.setState({
-          booksOfBible: chapters,
+          chapters: chapters,
           loading: true
         });
       });
+  };
+
+  verses = (testament: string, bookId: string, chapterId: number) => {
+    testament = "ENGNASO2ET";
+    bookId = "Gen";
+    chapterId = 1;
+    let verses: any = [];
+    fetch(
+      `https://dbt.io/text/verse?key=${dbpkey}&dam_id=ENGNASO2ET&book_id=${bookId}&chapter_id=1&v=2`
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        verses = data.map((book: any) => {
+          return book.verse_text;
+        });
+        this.setState({
+          verses: verses,
+          loading: true
+        });
+      });
+  };
+  testament = (book: any) => {
+    console.log("book = ", book);
   };
 
   render() {
@@ -65,9 +95,13 @@ class Bible extends React.Component<Props, State> {
     return (
       <div className="Bible">
         <Header title="Bible Page" />
-        <StyledDropdown options={loading ? booksOfBible : [""]} />
-        <StyledDropdown options={chapters} />
-        <StyledDropdown options={verses} />
+        <StyledDropdown
+          change={this.chapters}
+          options={loading ? booksOfBible : [""]}
+        />
+        <StyledDropdown change={this.verses} options={chapters} />
+        {/* <StyledDropdown change={this.verses} options={verses} /> */}
+        <p>Scripture Here {verses}</p>
       </div>
     );
   }
