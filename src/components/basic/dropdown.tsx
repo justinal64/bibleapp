@@ -24,7 +24,7 @@ class Dropdown extends React.Component<Props> {
       <StyledDropdown
         key={options}
         onChange={() => {
-          change("This is a test");
+          change(event);
         }}
       >
         {options.map((option: string) => (
