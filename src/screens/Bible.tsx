@@ -114,7 +114,7 @@ class Bible extends React.Component<Props, State> {
           options={!!bookNames ? bookNames : [""]}
         />
         <StyledDropdown onChange={this.verses} options={chapters} />
-        <p>{verses}</p>
+        <p> {verses} </p>
       </div>
     );
   }

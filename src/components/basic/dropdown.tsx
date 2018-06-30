@@ -20,7 +20,6 @@ class Dropdown extends React.Component<Props> {
   public render() {
     const { options, onChange } = this.props;
     return (
-      // TODO: Find a better way to create a dynamic dropdown.....
       <StyledDropdown key={options} onChange={onChange}>
         {options.map((option: string, i) => <option key={i}>{option}</option>)}
       </StyledDropdown>
