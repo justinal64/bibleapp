@@ -1,6 +1,6 @@
 import * as React from "react";
 import Header from "../components/typography/header";
-// import StyledDropdown from "../components/basic/dropdown";
+import StyledDropdown from "../components/basic/dropdown";
 import dbpkey from "../auth";
 
 interface State {
@@ -9,6 +9,9 @@ interface State {
   verses: string[];
   loading: boolean;
   chapter?: string;
+  bookNames: string[];
+  bookId: string;
+  damId: string;
 }
 
 interface Props {
@@ -22,59 +25,61 @@ class Bible extends React.Component<Props, State> {
       booksOfBible: [""],
       chapters: ["Pick a Book"],
       verses: [""],
+      bookNames: [""],
+      bookId: "",
+      damId: "",
       loading: false
     };
   }
 
   componentDidMount() {
-    let books: any = [];
-    fetch(`http://dbt.io/library/book?key=${dbpkey}&dam_id=ENGNAS&v=2`)
+    let bookNames: any = [];
+    let booksOfBible: any = [];
+    fetch(`https://dbt.io/text/book?key=${dbpkey}&dam_id=ENGNAS&v=2`)
       .then(response => {
         return response.json();
       })
       .then(data => {
-        books = data.map((book: any) => {
-          return book.book_name;
+        data.forEach((book: any) => {
+          bookNames.push(book.book_name);
+          booksOfBible.push(book);
         });
         this.setState({
-          booksOfBible: books,
+          booksOfBible,
+          bookNames,
           loading: true
         });
       });
   }
 
   chapters = (e: any) => {
-    let bookId = e.target.value.slice(0, 3);
-    this.setState({
-      chapter: bookId
-    });
-    let chapters: any = [];
-    fetch(
-      `http://dbt.io/library/chapter?key=c0c769e931f78307a6c1c65cc5bd1d8c&dam_id=ENGNAS&book_id=${bookId}&v=2`
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log("chapters = ", data);
-        chapters = data.map((book: any) => {
-          return book.chapter_name;
-        });
-        this.setState({
-          chapters: chapters,
-          loading: true
-        });
+    let currentChapter: object = this.state.booksOfBible.filter(
+      (x: any) => x.book_name === e.target.value
+    );
+    console.log("bookId = ", currentChapter[0].book_id);
+
+    let chapters: string[] = currentChapter[0].chapters
+      .split(",")
+      .map((chapter: any) => {
+        return "Chapter " + chapter;
       });
+    this.setState({
+      chapters,
+      bookId: currentChapter[0].book_Id,
+      damId: currentChapter[0].dam_id
+    });
   };
 
   verses = (e: any) => {
-    console.log("verses = ", e.target.value);
-    let testament = "ENGNASO2ET";
-    console.log(this.state.chapter);
-    let bookId = this.state.chapter;
+    console.log("bookId in verses = ", this.state.bookId);
+    console.log("damId = ", this.state.damId);
+
+    let chapterId = parseInt(e.target.value.match(/\d+/), 10);
     let verses: any = [];
     fetch(
-      `https://dbt.io/text/verse?key=${dbpkey}&dam_id=${testament}&book_id=${bookId}&chapter_id=1&v=2`
+      `https://dbt.io/text/verse?key=${dbpkey}&dam_id=${
+        this.state.damId
+      }&book_id=${this.state.bookId}&chapter_id=${chapterId}&v=2`
     )
       .then(response => {
         return response.json();
@@ -96,25 +101,19 @@ class Bible extends React.Component<Props, State> {
   };
 
   render() {
-    let { booksOfBible, chapters, verses } = this.state;
+    let { chapters, verses, bookNames, booksOfBible } = this.state;
+    console.log({ bookNames });
+    console.log({ booksOfBible });
+
     return (
       <div className="Bible">
         <Header title="Bible Page" />
-        <select onChange={this.chapters}>
-          {booksOfBible.map((option: string, index) => (
-            <option key={index}>{option}</option>
-          ))}
-        </select>
-        <select onChange={this.verses}>
-          {chapters.map((option: string) => (
-            <option key={option}>{option}</option>
-          ))}
-        </select>
-        {/* <StyledDropdown
-          change={this.chapters}
-          options={loading ? booksOfBible : [""]}
+
+        <StyledDropdown
+          onChange={this.chapters}
+          options={!!bookNames ? bookNames : [""]}
         />
-        <StyledDropdown change={this.verses} options={chapters} /> */}
+        <StyledDropdown onChange={this.verses} options={chapters} />
         <p>{verses}</p>
       </div>
     );
