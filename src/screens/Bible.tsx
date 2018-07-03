@@ -56,7 +56,6 @@ class Bible extends React.Component<Props, State> {
     let currentChapter: object = this.state.booksOfBible.filter(
       (x: any) => x.book_name === e.target.value
     );
-    console.log("bookId = ", currentChapter[0].book_id);
 
     let chapters: string[] = currentChapter[0].chapters
       .split(",")
@@ -65,15 +64,12 @@ class Bible extends React.Component<Props, State> {
       });
     this.setState({
       chapters,
-      bookId: currentChapter[0].book_Id,
-      damId: currentChapter[0].dam_id
+      bookId: currentChapter[0].book_id,
+      damId: (currentChapter[0].dam_id += "2ET")
     });
   };
 
   verses = (e: any) => {
-    console.log("bookId in verses = ", this.state.bookId);
-    console.log("damId = ", this.state.damId);
-
     let chapterId = parseInt(e.target.value.match(/\d+/), 10);
     let verses: any = [];
     fetch(
@@ -85,7 +81,6 @@ class Bible extends React.Component<Props, State> {
         return response.json();
       })
       .then(data => {
-        console.log(data);
         verses = data.map((book: any) => {
           return book.verse_text;
         });
@@ -96,15 +91,9 @@ class Bible extends React.Component<Props, State> {
       });
   };
 
-  testament = (book: any) => {
-    console.log("book = ", book);
-  };
-
   render() {
-    let { chapters, verses, bookNames, booksOfBible } = this.state;
-    console.log({ bookNames });
-    console.log({ booksOfBible });
-
+    let { chapters, verses, bookNames } = this.state;
+ 
     return (
       <div className="Bible">
         <Header title="Bible Page" />

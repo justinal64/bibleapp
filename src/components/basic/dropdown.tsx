@@ -13,14 +13,11 @@ const StyledDropdown = styled.select`
 `;
 
 class Dropdown extends React.Component<Props> {
-  testament = (book: any) => {
-    console.log("books = ", book);
-  };
-
   public render() {
     const { options, onChange } = this.props;
     return (
       <StyledDropdown key={options} onChange={onChange}>
+        <option />
         {options.map((option: string, i) => <option key={i}>{option}</option>)}
       </StyledDropdown>
     );
