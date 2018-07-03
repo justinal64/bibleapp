@@ -11,7 +11,10 @@ class Navigation extends React.Component<object> {
       <div>
         <Row>
           <Col xsOffset={1} lg={2} xs={1}>
-            Logo Here
+            Logo
+          </Col>
+          <Col lg={2} xs={1}>
+            <Link location="/" title="Home" />
           </Col>
           <Col xsOffset={1} lg={2} xs={1}>
             <Link location="/login" title="Login" />
@@ -30,9 +33,6 @@ class Navigation extends React.Component<object> {
             </Row>
           </Col>
         </Row>
-        {/* <Button title="Test" font={0.75} button="Success" /> */}
-        {/* <Link location="https://www.google.com" title="Google" /> */}
-        {/* <Link location="/blog" title="Blog" /> */}
       </div>
     );
   }
