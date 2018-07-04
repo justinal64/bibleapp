@@ -6,6 +6,7 @@ import Test from "../screens/Test";
 import Notfound from "../screens/Notfound";
 import Blog from "../screens/Blog";
 import Bible from "../screens/Bible";
+import Signup from "../screens/Signup";
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
 // and /schedule routes will match any pathname that starts
@@ -19,6 +20,7 @@ const Routes = () => (
       <Route path="/test" component={Test} />
       <Route path="/blog" component={Blog} />
       <Route path="/bible" component={Bible} />
+      <Route path="/signup" component={Signup} />
       <Route path="*" component={Notfound} />
     </Switch>
   </main>

@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 export interface Props {
-  location: string;
+  href: string;
   title: string;
 }
 
@@ -15,9 +15,8 @@ const StyledLink = styled.a`
 
 class Link extends React.Component<Props, object> {
   public render() {
-    const { location, title } = this.props;
-    return <StyledLink href={location}>{title}</StyledLink>;
-    // <a href="https://www.w3schools.com">Visit W3Schools</a>
+    const { href, title } = this.props;
+    return <StyledLink href={href}>{title}</StyledLink>;
   }
 }
 
