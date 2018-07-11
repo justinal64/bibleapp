@@ -13,6 +13,16 @@
 //   return <FontAwesome name={name} style={navColorScheme} />;
 // };
 
+export const displayBlock = `
+  display: block;
+  width: 100%;
+`;
+
+export const disabledButton = `
+opacity: .65;
+pointer-events: none;
+`;
+
 export const getFontSize = (props: any) =>
   props.font ? `font-size: ${props.font}rem;` : "";
 

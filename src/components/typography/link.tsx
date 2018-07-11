@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 export interface Props {
-  location: string;
+  href: string;
   title: string;
 }
 
@@ -13,11 +13,13 @@ const StyledLink = styled.a`
   color: palevioletred;
 `;
 
+// TODO: Pass in a value that is used to calculate
+// fontSize, width, height, etc etc
+
 class Link extends React.Component<Props, object> {
   public render() {
-    const { location, title } = this.props;
-    return <StyledLink href={location}>{title}</StyledLink>;
-    // <a href="https://www.w3schools.com">Visit W3Schools</a>
+    const { href, title } = this.props;
+    return <StyledLink href={href}>{title}</StyledLink>;
   }
 }
 
