@@ -14,28 +14,16 @@ class Navigation extends React.Component<object> {
             Logo
           </Col>
           <Col lg={2} md={2} xs={12}>
-            <Link
-              href="http://justinleggett.me/projects/thebibledare/"
-              title="Home"
-            />
+            <Link href="/" title="Home" />
           </Col>
           <Col lg={2} md={2} xs={12}>
-            <Link
-              href="http://justinleggett.me/projects/thebibledare/login"
-              title="Login"
-            />
+            <Link href="/login" title="Login" />
           </Col>
           <Col lg={2} md={2} xs={12}>
-            <Link
-              href="http://justinleggett.me/projects/thebibledare/tutorial"
-              title="Tutorial"
-            />
+            <Link href="/tutorial" title="Tutorial" />
           </Col>
           <Col lg={2} md={2} xs={12}>
-            <Link
-              href="http://justinleggett.me/projects/thebibledare/bible"
-              title="Bible"
-            />
+            <Link href="/bible" title="Bible" />
           </Col>
         </Row>
       </div>

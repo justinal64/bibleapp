@@ -13,6 +13,9 @@ const StyledLink = styled.a`
   color: palevioletred;
 `;
 
+// TODO: Pass in a value that is used to calculate
+// fontSize, width, height, etc etc
+
 class Link extends React.Component<Props, object> {
   public render() {
     const { href, title } = this.props;
